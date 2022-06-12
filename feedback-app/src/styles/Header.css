@@ -1,0 +1,15 @@
+:root {
+  --header-text-color: #ff6a95;
+  --header-background-color: rgba(0, 0, 0, 0.4);
+}
+
+.header__container {
+  background-color: var(--header-background-color);
+  text-align: center;
+  padding: 20px;
+}
+
+.header__text {
+  color: var(--header-text-color);
+  font-size: 32px;
+}

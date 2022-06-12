@@ -1,0 +1,11 @@
+- section 2
++ using "npx create-react-app app" command to create react app
++ using npm install, npm start to install packages and running
++ create and use components
++ conditional rendering with if/else
+
+- section 3
++ using PropTypes to validate props
++ using defaultProps to set default props
++ add styling to components
++ use useState to create a state
