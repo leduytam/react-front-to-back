@@ -1,3 +1,4 @@
+import AboutIconLink from './AboutIconLink';
 import Card from './Card';
 import FeedbackForm from './FeedbackForm';
 import FeedbackItem from './FeedbackItem';
@@ -13,5 +14,6 @@ export {
   FeedbackStats,
   FeedbackForm,
   Card,
-  RatingSelect
+  RatingSelect,
+  AboutIconLink
 };
