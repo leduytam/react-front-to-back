@@ -16,3 +16,13 @@ body {
 ul {
   list-style: none;
 }
+
+.feedback-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  margin: 24px auto;
+  gap: 30px;
+}
