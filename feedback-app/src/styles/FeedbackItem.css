@@ -22,14 +22,22 @@
   border: 2px solid var(--feedback-item-rating-border-color);
 }
 
-.feedback-item__btn-delete {
-  background-color: transparent;
-  border: 0;
-  cursor: pointer;
+.feedback-item__btn-group {
   position: absolute;
   top: 20px;
   right: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.feedback-item__btn {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
   font-size: 20px;
+  color: purple;
 }
 
 /* 

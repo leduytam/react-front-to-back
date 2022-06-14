@@ -1,8 +1,17 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { FeedbackContext } from '../../contexts';
 import '../../styles/RatingSelect.css';
 
 function RatingSelect({ select }) {
   const [rating, setRating] = useState(10);
+
+  const { currentEditingFeedback } = useContext(FeedbackContext);
+
+  useEffect(() => {
+    if (currentEditingFeedback !== null) {
+      setRating(currentEditingFeedback.rating);
+    }
+  }, [currentEditingFeedback]);
 
   function handleRatingChange(e) {
     setRating(+e.target.value);

@@ -1,13 +1,25 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { FeedbackContext } from '../../contexts';
 import '../../styles/FeedbackForm.css';
 import Card from '../Card';
 import RatingSelect from '../RatingSelect';
 
-function FeedbackForm({ handleAddFeedback }) {
+function FeedbackForm() {
   const [reviewText, setReviewText] = useState('');
   const [rating, setRating] = useState(10);
   const [isBtnSendDisabled, setBtnSendDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const { addFeedback, currentEditingFeedback, updateFeedback } =
+    useContext(FeedbackContext);
+
+  useEffect(() => {
+    if (currentEditingFeedback !== null) {
+      setBtnSendDisabled(false);
+      setReviewText(currentEditingFeedback.text);
+      setRating(currentEditingFeedback.rating);
+    }
+  }, [currentEditingFeedback]);
 
   function validateReviewText(reviewText) {
     if (reviewText === '') {
@@ -43,7 +55,11 @@ function FeedbackForm({ handleAddFeedback }) {
       rating: rating
     };
 
-    handleAddFeedback(feedback);
+    if (currentEditingFeedback === null) {
+      addFeedback(feedback);
+    } else {
+      updateFeedback(currentEditingFeedback.id, feedback);
+    }
 
     setReviewText('');
     setBtnSendDisabled(true);
@@ -66,7 +82,7 @@ function FeedbackForm({ handleAddFeedback }) {
             value={reviewText}
           />
           <button type='submit' disabled={isBtnSendDisabled}>
-            Send
+            {currentEditingFeedback === null ? 'Send' : 'Update'}
           </button>
         </div>
 
