@@ -6,6 +6,7 @@ import FeedbackList from './FeedbackList';
 import FeedbackStats from './FeedbackStats';
 import Header from './Header';
 import RatingSelect from './RatingSelect';
+import Spinner from './Spinner';
 
 export {
   Header,
@@ -15,5 +16,6 @@ export {
   FeedbackForm,
   Card,
   RatingSelect,
-  AboutIconLink
+  AboutIconLink,
+  Spinner
 };

@@ -3,9 +3,11 @@ import { useContext } from 'react';
 import { FeedbackContext } from '../../contexts';
 import '../../styles/FeedbackList.css';
 import FeedbackItem from '../FeedbackItem';
+import Spinner from '../Spinner';
 
 function FeedbackList() {
-  const { feedbacks, deleteFeedback } = useContext(FeedbackContext);
+  const { feedbacks, deleteFeedback, isFetchingFeedbacks } =
+    useContext(FeedbackContext);
 
   if (!feedbacks || feedbacks.length === 0) {
     return (
@@ -15,7 +17,9 @@ function FeedbackList() {
     );
   }
 
-  return (
+  return isFetchingFeedbacks ? (
+    <Spinner />
+  ) : (
     <div className='feedback-list'>
       <AnimatePresence>
         {feedbacks.map((feedback) => (

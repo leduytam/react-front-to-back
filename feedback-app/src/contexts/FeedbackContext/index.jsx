@@ -1,47 +1,81 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 const FeedbackContext = createContext();
 
 export function FeedbackProvider({ children }) {
-  const [feedbacks, setFeedbacks] = useState([
-    {
-      id: 1,
-      rating: 5,
-      text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam corrupti autem delectus magni eaque ipsam maxime nam voluptatum earum repellat atque a repellendus totam eveniet, voluptas dolores unde quasi iure?'
-    },
-    {
-      id: 2,
-      rating: 10,
-      text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus debitis qui odit ex, omnis perferendis autem, molestiae non unde illum sequi laborum totam dolore. Maiores odio culpa necessitatibus consequatur temporibus.'
-    },
-    {
-      id: 3,
-      rating: 3,
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam corrupti autem delectus magni eaque ipsam maxime nam voluptatum earum repellat atque a repellendus totam eveniet, voluptas dolores unde quasi iure?'
-    }
-  ]);
-
+  const [feedbacks, setFeedbacks] = useState([]);
   const [currentEditingFeedback, setCurrentEditingFeedback] = useState(null);
+  const [isFetchingFeedbacks, setIsFetchingFeedbacks] = useState(true);
 
-  function deleteFeedback(id) {
+  useEffect(() => {
+    if (isFetchingFeedbacks) {
+      fetchFeedbacks();
+    }
+  }, [isFetchingFeedbacks]);
+
+  async function fetchFeedbacks() {
+    const response = await fetch('/feedbacks?_sort=id&_order=desc');
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch feedbacks');
+    }
+
+    const feedbacks = await response.json();
+    setFeedbacks(feedbacks);
+    setIsFetchingFeedbacks(false);
+  }
+
+  async function deleteFeedback(id) {
     if (window.confirm('Are you sure you want to delete?')) {
+      const response = await fetch(`/feedbacks/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete feedback');
+      }
+
       setFeedbacks(feedbacks.filter((feedback) => feedback.id !== id));
     }
   }
 
-  function addFeedback(feedback) {
-    feedback.id = feedbacks.length + 1;
-    setFeedbacks([...feedbacks, feedback]);
+  async function addFeedback(feedback) {
+    const response = await fetch('/feedbacks', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(feedback)
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to add feedback');
+    }
+
+    const data = await response.json();
+    setFeedbacks([...feedbacks, data]);
   }
 
   function editFeedback(feedback) {
     setCurrentEditingFeedback(feedback);
   }
 
-  function updateFeedback(id, feedback) {
-    setFeedbacks(
-      feedbacks.map((f) => (f.id === id ? { ...f, ...feedback } : f))
-    );
+  async function updateFeedback(id, feedback) {
+    const response = await fetch(`/feedbacks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(feedback)
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update feedback');
+    }
+
+    const data = await response.json();
+
+    setFeedbacks(feedbacks.map((f) => (f.id === id ? { ...f, ...data } : f)));
     setCurrentEditingFeedback(null);
   }
 
@@ -53,7 +87,8 @@ export function FeedbackProvider({ children }) {
         deleteFeedback,
         editFeedback,
         updateFeedback,
-        currentEditingFeedback
+        currentEditingFeedback,
+        isFetchingFeedbacks
       }}
     >
       {children}
