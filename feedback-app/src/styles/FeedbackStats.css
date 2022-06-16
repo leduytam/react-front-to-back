@@ -1,0 +1,6 @@
+.feedback-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24px;
+  width: 100%;
+}

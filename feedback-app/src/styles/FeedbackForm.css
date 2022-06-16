@@ -1,0 +1,64 @@
+:root {
+  --feedback-form-submit-button-color: #fff;
+  --feedback-form-submit-button-background-color: #202142;
+  --feedback-form-input-border-color: #ccc;
+  --feedback-form-error-color: #f00;
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  gap: 12px;
+}
+
+.feedback-form__title {
+  text-align: center;
+}
+
+.feedback-form__input-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.feedback-form__input-group > input[type='text'] {
+  padding: 12px;
+  outline: none;
+  font-size: 16px;
+  font-family: inherit;
+  border-radius: 6px;
+  width: 80%;
+  border: 1px solid var(--feedback-form-input-border-color);
+}
+
+.feedback-form__input-group > button[type='submit'] {
+  font-family: inherit;
+  font-size: 16px;
+  border-radius: 6px;
+  padding: 12px 24px;
+  color: var(--feedback-form-submit-button-color);
+  background-color: var(--feedback-form-submit-button-background-color);
+  border: 0;
+}
+
+.feedback-form__input-group > button[type='submit']:hover,
+.feedback-form__input-group > button[type='submit']:active {
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.feedback-form__input-group > button[type='submit']:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.feedback-form__error {
+  font-size: 16px;
+  color: var(--feedback-form-error-color);
+}

@@ -1,0 +1,14 @@
+.feedback-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  font-size: 20px;
+  width: 100%;
+}
+
+/* fix framer motion display card not correct */
+.feedback-list > div {
+  width: 100%;
+}
