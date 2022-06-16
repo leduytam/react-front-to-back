@@ -7,6 +7,12 @@ const routes = {
   },
   notfound: {
     path: '*'
+  },
+  users: {
+    path: '/users',
+    user: {
+      path: '/users/:login'
+    }
   }
 };
 
