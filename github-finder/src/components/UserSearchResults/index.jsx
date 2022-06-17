@@ -4,9 +4,9 @@ import Spinner from '../Spinner';
 import UserItem from '../UserItem';
 
 function UserSearchResults() {
-  const { users, isSearchingUsers } = useContext(GithubContext);
+  const { users, isLoading } = useContext(GithubContext);
 
-  if (isSearchingUsers) {
+  if (isLoading) {
     return <Spinner />;
   }
 

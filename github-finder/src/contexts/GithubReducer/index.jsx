@@ -4,13 +4,27 @@ function githubReducer(state, action) {
       return {
         ...state,
         users: action.payload,
-        isSearchingUsers: false
+        isLoading: false
       };
 
-    case 'SET_IS_SEARCHING_USERS':
+    case 'SET_USER':
       return {
         ...state,
-        isSearchingUsers: true
+        user: action.payload,
+        isLoading: false
+      };
+
+    case 'SET_USER_REPOS':
+      return {
+        ...state,
+        repos: action.payload,
+        isLoading: false
+      };
+
+    case 'SET_IS_LOADING':
+      return {
+        ...state,
+        isLoading: true
       };
 
     case 'CLEAR_USERS':

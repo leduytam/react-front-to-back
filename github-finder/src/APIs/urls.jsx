@@ -7,6 +7,16 @@ const URL_Requests = {
       });
 
       return `search/users?${params}`;
+    },
+    get: function (username) {
+      return `users/${username}`;
+    },
+    repos: function (username, params) {
+      if (params) {
+        return `users/${username}/repos?${new URLSearchParams(params)}`;
+      }
+
+      return `users/${username}/repos`;
     }
   }
 };

@@ -1,23 +1,40 @@
 import { useContext, useState } from 'react';
-import { GithubContext } from '../../contexts';
+import { AlertContext, githubActions, GithubContext } from '../../contexts';
 
 function UserSearchBar() {
   const [text, setText] = useState('');
-  const { users, searchUsers, clearUsers } = useContext(GithubContext);
+  const { users, dispatch } = useContext(GithubContext);
+  const { setAlert } = useContext(AlertContext);
 
   function handleTextChange(e) {
     setText(e.target.value);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (text === '') {
-      alert('Please enter a username');
+      setAlert('Please enter a username');
       return;
     }
 
-    searchUsers(text);
+    dispatch({
+      type: 'SET_IS_LOADING',
+      payload: true
+    });
+
+    const users = await githubActions.searchUsers(text);
+
+    dispatch({
+      type: 'SET_USERS',
+      payload: users
+    });
+  }
+
+  function clearUsers() {
+    dispatch({
+      type: 'CLEAR_USERS'
+    });
   }
 
   return (
